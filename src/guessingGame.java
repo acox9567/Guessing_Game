@@ -14,17 +14,19 @@ public class guessingGame {
         System.out.println("I'll tell you if your guess it too high or too low.");
 
         Scanner input = new Scanner(System.in);
-        int guess = 0;
+        int guess = input.nextInt();
 
-        while (guess != ranNum)
+        while (!(guess == ranNum))
         {
+            if (guess > ranNum)
+                System.out.println("Sorry; that guess was too high. Try again.");
+            if (guess < ranNum)
+                System.out.println("Sorry; that guess was too low. Try again.");
             guess = input.nextInt();
-            if (guess == ranNum) ;
-                System.out.println("Correct!  The number was " + ranNum + ".");
-            if (guess == ranNum) ;
-                System.out.println("Too High.");
-            if (guess == ranNum) ;
-                System.out.println("Too Low.");
         }
+
+        input.close();
+        System.out.println("Correct! The number was " + ranNum + ".");
+
     }
 }
