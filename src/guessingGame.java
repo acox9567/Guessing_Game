@@ -27,6 +27,5 @@ public class guessingGame {
 
         input.close();
         System.out.println("Correct! The number was " + ranNum + ".");
-
     }
 }
