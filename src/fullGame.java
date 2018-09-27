@@ -1,6 +1,7 @@
 //Alexander Cox
 //Tuesday, September 25, 2018
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class fullGame {
@@ -11,15 +12,56 @@ public class fullGame {
         String name = input.nextLine();
         System.out.println("Hi " + name + ", do you want to guess my number or do ur want me to guess yours?");
         System.out.println("Enter '1' to guess the CPU's number or '2' to have the CPU guess your number.");
-        int gameMode = input.nextInt();
+
+        int gameMode = 0;
+        boolean gmDef = false;
+
+        while(!gmDef)
+        {
+            try
+            {
+                gameMode = input.nextInt();
+                if(gameMode == 1 || gameMode == 2)
+                    gmDef = true;
+                else
+                    System.out.println("Enter '1' to guess the CPU's number or '2' to have the CPU guess your number.");
+
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println(e);
+                System.out.println("Enter '1' to guess the CPU's number or '2' to have the CPU guess your number.");
+                input.next();
+            }
+        }
+
         System.out.println("Ok, now what difficulty do you want to play on?");
+
+        int difficulty = 0;
+
         System.out.println("Enter '10' for numbers 1-10, '100' for numbers 1-100, '1000' for numbers 1-1000, or '10000' for numbers 1-10000.");
-        int difficulty = input.nextInt();
+
+        boolean dDef = false;
+
+        while (!dDef) {
+            try {
+                difficulty = input.nextInt();
+                if(difficulty == 10 || difficulty == 100 || difficulty == 1000 || difficulty == 10000)
+                    dDef = true;
+                else
+                    System.out.println("Enter '10' for numbers 1-10, '100' for numbers 1-100, '1000' for numbers 1-1000, or '10000' for numbers 1-10000.");
+            } catch (InputMismatchException e) {
+                System.out.println(e);
+                System.out.println("Enter '10' for numbers 1-10, '100' for numbers 1-100, '1000' for numbers 1-1000, or '10000' for numbers 1-10000.");
+                input.next();
+            }
+        }
+
         if (gameMode == 1)
         {
             guessingGame(name, difficulty);
         }
-        if (gameMode == 2)
+        else if (gameMode == 2)
         {
             aiGuessingGame(name, difficulty);
         }
@@ -33,7 +75,18 @@ public class fullGame {
         System.out.println("Ok, start guessing, I'll tell you if your guess is too high or too low.");
 
         Scanner input = new Scanner(System.in);
-        int guess = input.nextInt();
+
+        int guess = 0;
+
+        try
+        {
+            guess = input.nextInt();
+        }
+        catch(InputMismatchException e)
+        {
+            System.out.println("You must enter and integer.");
+            input.next();
+        }
 
         while (!(guess == ranNum))
         {
@@ -42,12 +95,22 @@ public class fullGame {
             if (guess < ranNum)
                 System.out.println("Sorry " + name + "; that guess was too low. Try again.");
             gNum++;
-            guess = input.nextInt();
+
+            try
+            {
+                guess = input.nextInt();
+            }
+            catch(InputMismatchException e)
+            {
+                System.out.println("You must enter and integer.");
+
+                input.next();
+            }
         }
 
         gNum++;
         input.close();
-        System.out.println("Nice job " + name + "! The number was " + ranNum + ".");
+        System.out.println("Nice job " + name + "! The number was " + ranNum + ", and it took you " + gNum + " guesses to get it.");
     }
 
     public static void aiGuessingGame(String name, int difficulty)
@@ -87,7 +150,7 @@ public class fullGame {
             }
             else
             {
-                System.out.print("Sorry" + name + " I don't understand.");
+                System.out.print("Sorry " + name + " I don't understand. ");
             }
 
             System.out.println("Is your number " + guess + "?");
@@ -98,6 +161,6 @@ public class fullGame {
         gNum++;
 
         input.close();
-        System.out.println("It oly took me " + gNum + " guesses.");
+        System.out.println("It only took me " + gNum + " guesses.");
     }
 }
